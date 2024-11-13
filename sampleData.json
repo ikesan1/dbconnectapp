@@ -2,16 +2,131 @@
   {
     "name": "Alice Johnson",
     "age": 28,
-    "email": "alice.johnson@example.com"
+    "email": "alice.johnson@example.com",
+    "address": {
+      "street": "123 Maple Street",
+      "city": "Springfield",
+      "postcode": "62704"
+    }
   },
   {
     "name": "Bob Smith",
     "age": 35,
-    "email": "bob.smith@example.com"
+    "email": "bob.smith@example.com",
+    "address": {
+      "street": "456 Oak Avenue",
+      "city": "Madison",
+      "postcode": "53703"
+    }
   },
   {
     "name": "Catherine Lee",
     "age": 42,
-    "email": "catherine.lee@example.com"
+    "email": "catherine.lee@example.com",
+    "address": {
+      "street": "789 Pine Lane",
+      "city": "Austin",
+      "postcode": "73301"
+    }
+  },
+  {
+    "name": "Daniel Brown",
+    "age": 30,
+    "email": "daniel.brown@example.com",
+    "address": {
+      "street": "321 Elm Drive",
+      "city": "Denver",
+      "postcode": "80203"
+    }
+  },
+  {
+    "name": "Emma Wilson",
+    "age": 27,
+    "email": "emma.wilson@example.com",
+    "address": {
+      "street": "654 Cedar Court",
+      "city": "Miami",
+      "postcode": "33101"
+    }
+  },
+  {
+    "name": "Frank Harris",
+    "age": 50,
+    "email": "frank.harris@example.com",
+    "address": {
+      "street": "987 Birch Street",
+      "city": "Seattle",
+      "postcode": "98101"
+    }
+  },
+  {
+    "name": "Grace Martin",
+    "age": 33,
+    "email": "grace.martin@example.com",
+    "address": {
+      "street": "246 Willow Way",
+      "city": "Boston",
+      "postcode": "02108"
+    }
+  },
+  {
+    "name": "Henry Davis",
+    "age": 40,
+    "email": "henry.davis@example.com",
+    "address": {
+      "street": "369 Ash Boulevard",
+      "city": "San Francisco",
+      "postcode": "94101"
+    }
+  },
+  {
+    "name": "Isabella Moore",
+    "age": 25,
+    "email": "isabella.moore@example.com",
+    "address": {
+      "street": "159 Redwood Road",
+      "city": "Los Angeles",
+      "postcode": "90001"
+    }
+  },
+  {
+    "name": "Jack Thomas",
+    "age": 29,
+    "email": "jack.thomas@example.com",
+    "address": {
+      "street": "753 Cypress Drive",
+      "city": "Chicago",
+      "postcode": "60601"
+    }
+  },
+  {
+    "name": "Karen White",
+    "age": 38,
+    "email": "karen.white@example.com",
+    "address": {
+      "street": "852 Poplar Lane",
+      "city": "Portland",
+      "postcode": "97201"
+    }
+  },
+  {
+    "name": "Leo Walker",
+    "age": 22,
+    "email": "leo.walker@example.com",
+    "address": {
+      "street": "963 Cherry Way",
+      "city": "Phoenix",
+      "postcode": "85001"
+    }
+  },
+  {
+    "name": "Mia Young",
+    "age": 32,
+    "email": "mia.young@example.com",
+    "address": {
+      "street": "357 Palm Drive",
+      "city": "Dallas",
+      "postcode": "75201"
+    }
   }
 ]

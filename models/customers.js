@@ -1,9 +1,15 @@
 import mongoose from "mongoose";
 
 const customerSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
-  email: String,
+  name: { type: String, required: true },
+  age: { type: Number, required: true },
+  email: { type: String, required: true, unique: true },
+  address: {
+    street: { type: String, required: true },
+    city: { type: String, required: true },
+    postcode: { type: String, required: true },
+  },
 });
 
-export default mongoose.model("Customer", customerSchema);
+const Customer = mongoose.model("Customer", customerSchema);
+export default Customer;
