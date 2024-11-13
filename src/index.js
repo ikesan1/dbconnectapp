@@ -2,6 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import Customer from "./models/customers.js";
 
 const app = express();
@@ -10,17 +12,32 @@ dotenv.config();
 const PORT = process.env.PORT || 7000;
 const MONGOURI = process.env.MONGODB_URI;
 
-// Read customers from JSON file
-const customers = JSON.parse(fs.readFileSync("./sampleData.json", "utf8"));
+// --- IMPORT CUSTOMER DATA ---
+// Dynamic resolving of file paths.
+// We need the extra code to import sampleData.json because of the way node.js interprets file paths.
+// File paths are interpreted relative to the CWD (current working directory) of the node process.
 
-mongoose.set("debug", process.env.NODE_ENV !== "production"); // Debug only in development
+// Get the directory of the current file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Read customers from JSON file
+const customers = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "data", "sampleData.json"), "utf8")
+);
+// The following code also works, however, it is not recommended to use it in production due to scalability issues.
+// const customers = JSON.parse(
+//   fs.readFileSync("./src/data/sampleData.json", "utf8")
+// );
+
+// --- DATABASE CONNECTION ---
+mongoose.set("debug", process.env.NODE_ENV !== "production");
 
 const startServer = async () => {
   try {
     await mongoose.connect(MONGOURI);
     console.log("Database is Connected Successfully");
 
-    // Seed the database (only if empty) with sample data from sampleData.json
     const existingCustomers = await Customer.find();
     if (existingCustomers.length === 0) {
       await Customer.insertMany(customers);
@@ -37,14 +54,14 @@ const startServer = async () => {
 
 startServer();
 
-// Middleware to parse JSON requests
+// --- EXPRESS MIDDLEWARE ---
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Route to get all customers
+// --- ROUTES ---
 app.get("/getCustomers", async (req, res) => {
   try {
-    const customerData = await Customer.find(); // Use the Customer model
+    const customerData = await Customer.find();
     res.json(customerData);
   } catch (err) {
     console.error("Error fetching users:", err);

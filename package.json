@@ -2,10 +2,10 @@
   "name": "dbconnectapp",
   "version": "1.0.0",
   "description": "connect mongodb with express",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
