@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import Customer from "./models/customers.js";
+// import Customer from "./models/customers.js";
 
 const app = express();
 dotenv.config();
@@ -11,17 +11,20 @@ const MONGOURI = process.env.MONGODB_URI;
 
 mongoose.set("debug", true);
 
-mongoose
-  .connect(MONGOURI)
-  .then(() => {
+const startServer = async () => {
+  try {
+    await mongoose.connect(MONGOURI);
     console.log("Database is Connected Successfully");
+
     app.listen(PORT, () => {
       console.log(`Server is running on PORT ${PORT}`);
     });
-  })
-  .catch((err) => {
+  } catch (err) {
     console.log(err);
-  });
+  }
+};
+
+startServer();
 
 const userSchema = new mongoose.Schema({
   name: String,
