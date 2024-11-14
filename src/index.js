@@ -25,10 +25,6 @@ const __dirname = path.dirname(__filename);
 const customers = JSON.parse(
   fs.readFileSync(path.join(__dirname, "data", "sampleData.json"), "utf8")
 );
-// The following code also works, however, it is not recommended to use it in production due to scalability issues.
-// const customers = JSON.parse(
-//   fs.readFileSync("./src/data/sampleData.json", "utf8")
-// );
 
 // --- DATABASE CONNECTION ---
 mongoose.set("debug", process.env.NODE_ENV !== "production");
@@ -62,7 +58,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Get request to fetch all customers
 app.get("/getCustomers", async (req, res) => {
-  console.log(await mongoose.connection.db.listCollections().toArray()); // List all collections in the database
   try {
     const customerData = await Customer.find();
     res.json(customerData);
@@ -97,5 +92,22 @@ app.post("/addCustomer", async (req, res) => {
   } catch (err) {
     console.error("Error adding user:", err);
     res.status(500).json({ error: "Failed to add user." });
+  }
+});
+
+// Delete request to delete a customer by ID
+app.delete("/deleteCustomer/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const customerData = await Customer.findByIdAndDelete(id);
+    if (!customerData) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    res.json(customerData);
+  } catch (err) {
+    console.error("Error deleting user:", err);
+    res.status(500).json({ error: "Failed to delete user." });
   }
 });
