@@ -111,3 +111,38 @@ app.delete("/deleteCustomer/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to delete user." });
   }
 });
+
+// Put request to update a customer by ID
+app.put("/updateCustomer/:id", async (req, res) => {
+  const { id } = req.params;
+
+  // Validate ObjectId
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid ID format." });
+  }
+
+  try {
+    // Dynamically build $set object
+    const updateData = {};
+    if (req.body.address) {
+      for (const [key, value] of Object.entries(req.body.address)) {
+        updateData[`address.${key}`] = value;
+      }
+    }
+
+    const updatedCustomer = await Customer.findByIdAndUpdate(
+      id,
+      { $set: updateData }, // Dynamically update nested fields
+      { new: true, runValidators: true } // Return updated document and validate
+    );
+
+    if (!updatedCustomer) {
+      return res.status(404).json({ error: "Customer not found." });
+    }
+
+    res.json(updatedCustomer);
+  } catch (err) {
+    console.error("Error updating customer:", err); // Log full error
+    res.status(500).json({ error: "Failed to update customer." });
+  }
+});
