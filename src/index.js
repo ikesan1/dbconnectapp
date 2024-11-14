@@ -67,6 +67,23 @@ app.get("/getCustomers", async (req, res) => {
   }
 });
 
+// Get request to fetch a customer by ID
+app.get("/getCustomer/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const customerData = await Customer.findById(id);
+    if (!customerData) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    res.json(customerData);
+  } catch (err) {
+    console.error("Error fetching user:", err);
+    res.status(500).json({ error: "Failed to fetch user." });
+  }
+});
+
 // Post request to add a new customer
 app.post("/addCustomer", async (req, res) => {
   const { name, age, email, address } = req.body;
