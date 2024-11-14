@@ -59,12 +59,43 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // --- ROUTES ---
+
+// Get request to fetch all customers
 app.get("/getCustomers", async (req, res) => {
+  console.log(await mongoose.connection.db.listCollections().toArray()); // List all collections in the database
   try {
     const customerData = await Customer.find();
     res.json(customerData);
   } catch (err) {
     console.error("Error fetching users:", err);
     res.status(500).json({ error: "Failed to fetch users." });
+  }
+});
+
+// Post request to add a new customer
+app.post("/addCustomer", async (req, res) => {
+  const { name, age, email, address } = req.body;
+
+  // Validate required fields
+  if (
+    !name ||
+    !age ||
+    !email ||
+    !address ||
+    !address.street ||
+    !address.city ||
+    !address.postcode
+  ) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
+
+  const newCustomer = new Customer(req.body);
+
+  try {
+    const customerData = await newCustomer.save();
+    res.status(201).json(customerData);
+  } catch (err) {
+    console.error("Error adding user:", err);
+    res.status(500).json({ error: "Failed to add user." });
   }
 });
