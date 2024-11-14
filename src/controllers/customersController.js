@@ -1,11 +1,8 @@
-import express from "express";
 import mongoose from "mongoose";
-import Customer from "../models/customers.js";
+import Customer from "../models/customers-model.js";
 
-const router = express.Router();
-
-// Get all customers
-router.get("/getCustomers", async (req, res) => {
+// Controller: Get all customers
+export const getCustomers = async (req, res) => {
   try {
     const customerData = await Customer.find();
     res.json(customerData);
@@ -13,10 +10,10 @@ router.get("/getCustomers", async (req, res) => {
     console.error("Error fetching users:", err);
     res.status(500).json({ error: "Failed to fetch users." });
   }
-});
+};
 
-// Get customer by ID
-router.get("/getCustomer/:id", async (req, res) => {
+// Controller: Get customer by ID
+export const getCustomerById = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -30,10 +27,10 @@ router.get("/getCustomer/:id", async (req, res) => {
     console.error("Error fetching user:", err);
     res.status(500).json({ error: "Failed to fetch user." });
   }
-});
+};
 
-// Add a new customer
-router.post("/addCustomer", async (req, res) => {
+// Controller: Add a new customer
+export const addCustomer = async (req, res) => {
   const { name, age, email, address } = req.body;
 
   if (
@@ -57,10 +54,10 @@ router.post("/addCustomer", async (req, res) => {
     console.error("Error adding user:", err);
     res.status(500).json({ error: "Failed to add user." });
   }
-});
+};
 
-// Delete a customer by ID
-router.delete("/deleteCustomer/:id", async (req, res) => {
+// Controller: Delete a customer by ID
+export const deleteCustomer = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -74,10 +71,10 @@ router.delete("/deleteCustomer/:id", async (req, res) => {
     console.error("Error deleting user:", err);
     res.status(500).json({ error: "Failed to delete user." });
   }
-});
+};
 
-// Update a customer by ID
-router.put("/updateCustomer/:id", async (req, res) => {
+// Controller: Update a customer by ID
+export const updateCustomer = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -107,6 +104,4 @@ router.put("/updateCustomer/:id", async (req, res) => {
     console.error("Error updating customer:", err);
     res.status(500).json({ error: "Failed to update customer." });
   }
-});
-
-export default router;
+};
